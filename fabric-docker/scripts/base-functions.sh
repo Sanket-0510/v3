@@ -101,7 +101,8 @@ createChannelTx() {
  
   # sudo chown sanket:sanket fabric-config/config
 
-  docker exec -i $CONTAINER_NAME cat /config/channel.pb > "$CHANNEL_TX_PATH" || removeContainer $CONTAINER_NAME
+  docker exec -u $(id -u):$(id -g) -i $CONTAINER_NAME cat /config/channel.pb > "$CHANNEL_TX_PATH" && chown $(id -u):$(id -g) "$CHANNEL_TX_PATH" && cat /config/channel.pb > "$CHANNEL_TX_PATH" || removeContainer $CONTAINER_NAME
+
 
   removeContainer $CONTAINER_NAME
 
